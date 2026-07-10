@@ -26,6 +26,7 @@ jobs:
           grep -q "Public Sub RiffClose" package/Riff.bas
           grep -q "Public Function RiffLoad" package/Riff.bas
           grep -q "Public Function RiffPlay" package/Riff.bas
+          sed -n '/^Public Function RiffLoad(/,/^End Function/p' package/Riff.bas | grep -q "RiffTryLoadWavFast"
 
       - name: Validate release asset workflow
         shell: bash
