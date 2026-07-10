@@ -4152,7 +4152,17 @@ Public Function RiffLoad(ByVal filePath As String) As Long
         RiffSetLastError RiffErrorFileNotFound
         Exit Function
     End If
-    
+
+    Dim wavResult As Long
+    wavResult = RiffTryLoadWavFast(filePath, slot)
+
+    If wavResult >= 0 Then
+        RiffLoad = wavResult
+        Exit Function
+    ElseIf wavResult = RIFF_FAST_WAV_FATAL Then
+        Exit Function
+    End If
+
     #If VBA7 Then
         Dim pReader As LongPtr
         Dim pPartialType As LongPtr
